@@ -64,7 +64,6 @@ public class NodeServiceImpl implements NodeService, GethRpcConstants {
 
     @Override
     public Node get() throws APIException {
-
         Node node = new Node();
 
         Map<String, Object> data = null;
@@ -169,12 +168,11 @@ public class NodeServiceImpl implements NodeService, GethRpcConstants {
 
     private NodeConfig createNodeConfig() throws IOException {
         return new NodeConfig(gethConfig.getIdentity(), gethConfig.isMining(), gethConfig.getNetworkId(),
-                gethConfig.getVerbosity(), gethConfig.getGenesisBlock(), gethConfig.getExtraParams());
+                gethConfig.getVerbosity(), gethConfig.getGenesisBlock(), gethConfig.getExtraParams(), gethConfig.getConsensusMode());
     }
 
     @Override
     public NodeConfig update(NodeSettings settings) throws APIException {
-
         boolean restart = false;
         boolean reset = false;
 
@@ -200,6 +198,11 @@ public class NodeServiceImpl implements NodeService, GethRpcConstants {
             String currExtraParams = gethConfig.getExtraParams();
             if (StringUtils.isNotBlank(settings.getExtraParams()) && (currExtraParams == null || !settings.getExtraParams().contentEquals(currExtraParams))) {
                 gethConfig.setExtraParams(settings.getExtraParams());
+                restart = true;
+            }
+
+            if (StringUtils.isNotEmpty(settings.getConsensusMode()) && !settings.getConsensusMode().contentEquals(gethConfig.getConsensusMode())) {
+                gethConfig.setConsensusMode(settings.getConsensusMode());
                 restart = true;
             }
 

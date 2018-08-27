@@ -92,17 +92,17 @@ public class NodeController extends BaseController {
         @ApiImplicitParam(name = "networkId", required = false, value = "Network Id", dataType = "java.lang.String", paramType = "body")
         ,
         @ApiImplicitParam(name = "committingTransactions", required = false, value = "Commit transactions true/false", dataType = "java.lang.Object", paramType = "body")
+        //,
+        //@ApiImplicitParam(name = "consensusMode", required = false, value = "Consensus mode: Raft or IBFT", dataType = "java.lang.String", paramType = "body")
     })
     @RequestMapping("/update")
     public ResponseEntity<APIResponse> update(@RequestBody NodePostJsonRequest jsonRequest) throws APIException {
-
         Boolean isMining;
         NodeSettings nodeSettings = new NodeSettings().extraParams(jsonRequest.getExtraParams()).genesisBlock(jsonRequest.getGenesisBlock())
                 .blockMakerAccount(jsonRequest.getBlockMakerAccount()).voterAccount(jsonRequest.getVoterAccount()).minBlockTime(jsonRequest.getMinBlockTime())
-                .maxBlockTime(jsonRequest.getMaxBlockTime());
+                .maxBlockTime(jsonRequest.getMaxBlockTime()).consensusMode(jsonRequest.getConsensusMode());
 
         try {
-
             if (!StringUtils.isEmpty(jsonRequest.getLogLevel())) {
                 nodeSettings.logLevel(Integer.parseInt(jsonRequest.getLogLevel()));
             }
@@ -112,7 +112,6 @@ public class NodeController extends BaseController {
             }
 
             if (jsonRequest.getCommittingTransactions() != null) {
-
                 if (jsonRequest.getCommittingTransactions() instanceof String
                         && StringUtils.isNotBlank((String) jsonRequest.getCommittingTransactions())) {
                     isMining = Boolean.parseBoolean((String) jsonRequest.getCommittingTransactions());
@@ -139,19 +138,16 @@ public class NodeController extends BaseController {
                 updateVoteContract(nodeSettings.getVoterAccount(), "removeVoter",
                         new Object[]{gethConfig.getVoteAccount()});
             }
+
+            if (!StringUtils.isNotBlank(jsonRequest.getConsensusMode())) {
+                nodeSettings.consensusMode(jsonRequest.getConsensusMode());
+            }
+
             nodeService.update(nodeSettings);
 
             return doGet();
-
         } catch (NumberFormatException ne) {
-            APIError err = new APIError();
-            err.setStatus("400");
-            err.setTitle("Input Formatting Error");
-
-            APIResponse res = new APIResponse();
-            res.addError(err);
-
-            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(APIResponse.newErrorResponse(new APIError("400", "Input Formatting Error")), HttpStatus.BAD_REQUEST);
         }
     }
 

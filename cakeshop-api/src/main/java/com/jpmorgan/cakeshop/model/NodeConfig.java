@@ -7,13 +7,13 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
  * @author Michael Kazansky
  */
 public class NodeConfig {
-
     private String identity;
     private Boolean committingTransactions;
     private Integer networkId;
     private Integer logLevel;
     private String genesisBlock;
     private String extraParams;
+    private String consensusMode;
 
     public NodeConfig (String identity, Boolean mining, Integer networkid, Integer verbosity, String genesisBlock, String extraParams) {
         this.identity = identity;
@@ -22,6 +22,11 @@ public class NodeConfig {
         this.logLevel = verbosity;
         this.setGenesisBlock(genesisBlock);
         this.setExtraParams(extraParams);
+    }
+
+    public NodeConfig (String identity, Boolean mining, Integer networkid, Integer verbosity, String genesisBlock, String extraParams, String consensusMode) {
+        this(identity, mining, networkid, verbosity, genesisBlock, extraParams);
+        this.consensusMode = consensusMode;
     }
 
     /**
@@ -96,6 +101,20 @@ public class NodeConfig {
         this.extraParams = extraParams;
     }
 
+    /**
+     * @return the consensusMode
+     */
+    public String getConsensusMode() {
+        return consensusMode;
+    }
+
+    /**
+     * @param consensusMode the consensusMode to set
+     */
+    public void setConsensusMode(String consensusMode) {
+        this.consensusMode = consensusMode;
+    }
+
     public APIData toAPIData() {
         APIData data = new APIData();
         data.setId(null);
@@ -108,5 +127,4 @@ public class NodeConfig {
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj, false);
     }
-
 }

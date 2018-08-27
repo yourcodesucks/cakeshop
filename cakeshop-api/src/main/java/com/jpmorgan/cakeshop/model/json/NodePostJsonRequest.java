@@ -8,8 +8,8 @@ package com.jpmorgan.cakeshop.model.json;
 public class NodePostJsonRequest {
 
     private String address;
-    private String logLevel, networkId, identity, genesisBlock, blockMakerAccount, voterAccount, extraParams,
-            constellationNode;
+    private String logLevel, networkId, identity, genesisBlock, blockMakerAccount, voterAccount, extraParams, constellationNode;
+    private String consensusMode;
     private Object committingTransactions;
     private Integer minBlockTime, maxBlockTime;
 
@@ -181,4 +181,17 @@ public class NodePostJsonRequest {
         this.constellationNode = constellationNode;
     }
 
+    /**
+     * @return the consensusMode
+     */
+    public String getConsensusMode() {
+        return consensusMode;
+    }
+
+    /**
+     * @param consensusMode the consensusMode to set
+     */
+    public void setConsensusMode(String consensusMode) {
+        this.consensusMode = extraParams;
+    }
 }

@@ -7,7 +7,7 @@ package com.jpmorgan.cakeshop.model;
 
 public class NodeSettings {
 
-    private String identity, extraParams, genesisBlock, blockMakerAccount, voterAccount;
+    private String identity, extraParams, genesisBlock, blockMakerAccount, voterAccount, consensusMode;
     private Integer minBlockTime, maxBlockTime, logLevel, networkId;
     private Boolean isMining;
 
@@ -50,6 +50,22 @@ public class NodeSettings {
 
     public NodeSettings networkId(Integer networkId) {
         this.networkId = networkId;
+        return this;
+    }
+
+    public String getConsensusMode() {
+        return this.consensusMode;
+    }
+
+    /**
+     * @param networkId the networkId to set
+     */
+    public void setConsensusMode(String consensusMode) {
+        this.consensusMode = consensusMode;
+    }
+
+    public NodeSettings consensusMode(String consensusMode) {
+        this.consensusMode = consensusMode;
         return this;
     }
 

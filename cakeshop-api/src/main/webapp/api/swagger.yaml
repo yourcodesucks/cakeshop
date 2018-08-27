@@ -918,6 +918,11 @@ paths:
           required: false
           description: Genesis block to use for the chain (modifying this will reset the chain)
           in: body
+        - name: consensusMode
+          type: string
+          required: false
+          description: 'Consensus mode: Raft or IBFT'
+          in: body
       responses:
         '200':
           description: Success

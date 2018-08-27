@@ -1330,6 +1330,12 @@
 						"required": false,
 						"description": "[Quorum only] Block creation strategy, maximum time until block generation (seconds)",
 						"in": "body"
+					}, {
+						"name": "consensusMode",
+						"type": "string",
+						"required": false,
+						"description": "Consensus mode: Raft or IBFT",
+						"in": "body"
 					}
 				],
 				"responses": {
