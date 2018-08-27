@@ -47,6 +47,12 @@ public class APIResponse {
         return res;
     }
 
+    public static APIResponse newErrorResponse(APIError error) {
+        APIResponse res = new APIResponse();
+        res.addError(error);
+        return res;
+    }
+
     public APIResponse() {
         this.meta = DEFAULT_META_INFO;
     }
@@ -55,6 +61,7 @@ public class APIResponse {
         addError(error);
         return this;
     }
+
     public void addError(APIError error) {
         if (getErrors() == null) {
             this.errors = new ArrayList<APIError>();

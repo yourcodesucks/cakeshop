@@ -16,6 +16,10 @@ public class APIError {
     public APIError() {
     }
 
+    public APIError(String status, String title) {
+        this(null, status, title, null, null);
+    }
+
     public APIError(String id, String status, String title) {
         this(id, status, title, null, null);
     }
