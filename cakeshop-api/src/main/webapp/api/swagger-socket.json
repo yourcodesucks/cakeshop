@@ -858,7 +858,7 @@
 				},
 				"committingTransactions": {
 					"type": "boolean",
-					"description": "Indicates whether the node is commiting transactions or not"
+					"description": "Indicates whether the node is committing transactions or not"
 				},
 				"networkId": {
 					"type": "integer",
